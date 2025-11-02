@@ -1,0 +1,5 @@
+@if (showError()) {
+  @for (error of errors() | keyvalue; track error.key) {
+    <small class="text-red-200">* {{ error.value }}</small>
+  }
+}

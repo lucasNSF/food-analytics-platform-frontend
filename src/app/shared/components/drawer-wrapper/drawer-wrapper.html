@@ -1,0 +1,23 @@
+<p-drawer
+  [(visible)]="visible"
+  [position]="position()"
+  [modal]="modal()"
+  (onShow)="show.emit()"
+  (onHide)="hide.emit()"
+>
+  @if (headlessTemplate()) {
+    <ng-template pTemplate="headless">
+      <ng-container *ngTemplateOutlet="headlessTemplate()"></ng-container>
+    </ng-template>
+  } @else {
+    @if (headerTemplate()) {
+      <ng-container *ngTemplateOutlet="headerTemplate()"></ng-container>
+    }
+
+    <ng-content />
+
+    @if (footerTemplate()) {
+      <ng-container *ngTemplateOutlet="footerTemplate()"></ng-container>
+    }
+  }
+</p-drawer>

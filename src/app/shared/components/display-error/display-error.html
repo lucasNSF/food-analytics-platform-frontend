@@ -1,0 +1,14 @@
+@if (form().touched) {
+  @for (errorName of form().errors | keyvalue; track errorName.key) {
+    @if (errorTemplates()?.[errorName.key]) {
+      <ng-container
+        [ngTemplateOutlet]="errorTemplates()?.[errorName.key]"
+        [ngTemplateOutletContext]="{ $implicit: form().errors?.[errorName.key], control: form }"
+      ></ng-container>
+    } @else {
+      <small>{{
+        fallbackConfig()?.[errorName.key] ?? DEFAULT_FALLBACK_CONFIG[errorName.key](form())
+      }}</small>
+    }
+  }
+}

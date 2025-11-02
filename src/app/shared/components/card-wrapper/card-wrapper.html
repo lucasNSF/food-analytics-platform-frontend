@@ -1,0 +1,21 @@
+<p-card [class]="class()">
+  @if (headerTemplate()) {
+    <ng-template #header>
+      <ng-container *ngTemplateOutlet="headerTemplate()"></ng-container>
+    </ng-template>
+  }
+
+  @if (subHeaderTemplate()) {
+    <ng-template #subHeader>
+      <ng-container *ngTemplateOutlet="subHeaderTemplate()"></ng-container>
+    </ng-template>
+  }
+
+  <ng-content></ng-content>
+
+  @if (footerTemplate()) {
+    <ng-template #footer>
+      <ng-container *ngTemplateOutlet="footerTemplate()"></ng-container>
+    </ng-template>
+  }
+</p-card>
