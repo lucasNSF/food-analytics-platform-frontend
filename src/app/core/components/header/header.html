@@ -1,3 +1,7 @@
-<header>
-  <h1>Dashboard</h1>
+<header class="flex justify-between items-center px-5 py-5 shadow-xl">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+
+  <p-togglebutton [(ngModel)]="editModeOn" (ngModelChange)="updateDashboardGrid()" onLabel="{{'Modo de Edição'}}" offLabel="Visualizar Apenas" class="w-50" />
+
+  <app-button-wrapper label="Adicionar métrica" [rounded]="true" (onClick)="openDrawer()" [raised]="true" />
 </header>

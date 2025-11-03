@@ -3,6 +3,7 @@ import {
   Component,
   forwardRef,
   input,
+  output,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -39,4 +40,6 @@ export class DatePickerWrapper extends BaseInput<Date | Date[] | undefined> {
   readonly hourFormat = input<'24' | '12'>('24');
   readonly timeOnly = input(false);
   readonly view = input<DatePickerTypeView>('date');
+
+  readonly onDateSelect = output<Date | Date[] | undefined>();
 }

@@ -1,0 +1,8 @@
+<gridster [options]="gridOptions()">
+  @for (item of items(); track item) {
+    <gridster-item [item]="item" class="p-4" [style]="{ borderRadius: '0.5rem' }">
+      <p class="font-semibold font-xl">{{ item.data.title }}</p>
+      <app-preview-data [data]="item.data.metric" [visualizationType]="item.data.visualizationType" />
+    </gridster-item>
+  }
+</gridster>

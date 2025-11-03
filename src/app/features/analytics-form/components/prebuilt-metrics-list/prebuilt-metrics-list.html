@@ -1,0 +1,5 @@
+@for (reportData of reports(); track reportData.report) {
+  <app-button-wrapper [label]="reportData.label" [raised]="true" class="w-full" [outlined]="true" (onClick)="generateMetricAndAddToGrid(reportData)" />
+} @empty {
+  <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s" [style]="{ width: '50px', height: '50px' }" />
+}

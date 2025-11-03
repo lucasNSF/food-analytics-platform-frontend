@@ -1,0 +1,12 @@
+<app-button-group-wrapper>
+  <p-button
+    label="Padrão"
+    [severity]="currentSection() === 'default' ? 'primary' : 'secondary'"
+    (onClick)="updateDrawerSection('default')"
+  />
+  <p-button
+    label="Novo"
+    [severity]="currentSection() === 'custom' ? 'primary' : 'secondary'"
+    (onClick)="updateDrawerSection('custom')"
+  />
+</app-button-group-wrapper>

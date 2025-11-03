@@ -1,0 +1,20 @@
+@switch (visualizationType()) {
+  @case ('table') {
+    <app-table-data-visualization [data]="data()" />
+  }
+  @case ('pie') {
+    <app-chart-data-visualization [data]="data()" [visualizationType]="visualizationType()" />
+  }
+  @case ('bar') {
+    <app-chart-data-visualization [data]="data()" [visualizationType]="visualizationType()" />
+  }
+  @case ('line') {
+    <app-chart-data-visualization [data]="data()" [visualizationType]="visualizationType()" />
+  }
+  @case ('area') {
+    <app-chart-data-visualization [data]="data()" [visualizationType]="visualizationType()" />
+  }
+  @case ('kpi') {
+    <app-kpi-data-visualization [data]="data()" />
+  }
+}

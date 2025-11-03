@@ -1,0 +1,43 @@
+<app-context-selection (selectedContextChange)="handleSelectedContext($event)" class="mb-5 flex justify-center" />
+
+<p-accordion [value]="activeTab()">
+  <p-accordion-panel value="0">
+    <p-accordion-header>Dimensões</p-accordion-header>
+
+    <p-accordion-content>
+      <app-dimensions-form [selectedContext]="selectedContext()" (formValue)="handleDimensionFormValue($event)" class="ml-5 py-5 block" />
+    </p-accordion-content>
+  </p-accordion-panel>
+
+  <p-accordion-panel value="1">
+    <p-accordion-header>Medidas</p-accordion-header>
+
+    <p-accordion-content>
+      <app-measures-form [selectedContext]="selectedContext()" (formValue)="handleMeasureFormValue($event)" class="ml-5 py-5 block" />
+    </p-accordion-content>
+  </p-accordion-panel>
+
+  <p-accordion-panel value="2">
+    <p-accordion-header>Filtros</p-accordion-header>
+
+    <p-accordion-content>
+      <app-filters-form [selectedContext]="selectedContext()" (formValue)="handleFiltersFormValue($event)" class="ml-5 py-5 block" />
+    </p-accordion-content>
+  </p-accordion-panel>
+
+  <p-accordion-panel value="3">
+    <p-accordion-header>Ordenação e limite</p-accordion-header>
+
+    <p-accordion-content>
+      <app-order-and-limit-form [selectedContext]="selectedContext()" (formValue)="handleOrderAndLimitValue($event)" class="ml-5 py-5 block" />
+    </p-accordion-content>
+  </p-accordion-panel>
+
+  <p-accordion-panel value="4">
+    <p-accordion-header>Visualização</p-accordion-header>
+
+    <p-accordion-content>
+      <app-data-visualization-form [analyticsPayload]="analyticsPayload()" class="ml-5 py-5 block" />
+    </p-accordion-content>
+  </p-accordion-panel>
+</p-accordion>

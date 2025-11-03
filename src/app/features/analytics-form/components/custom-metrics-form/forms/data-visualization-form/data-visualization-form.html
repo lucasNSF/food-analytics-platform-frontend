@@ -1,0 +1,35 @@
+@if (visualizationType() !== 'kpi') {
+  <app-float-label-wrapper class="flex justify-center mb-7">
+    <input type="text" pInputText [(ngModel)]="metricTitle" id="title" />
+    <label for="title">Título da Métrica</label>
+  </app-float-label-wrapper>
+}
+
+<app-button-group-wrapper class="flex justify-center mb-3">
+  <p-button label="Pizza" [outlined]="visualizationType() !== 'pie'" severity="secondary" (onClick)="updateVisualizationType('pie')" />
+  <p-button label="Barras" [outlined]="visualizationType() !== 'bar'" severity="secondary" (onClick)="updateVisualizationType('bar')" />
+  <p-button label="Linha" [outlined]="visualizationType() !== 'line'" severity="secondary" (onClick)="updateVisualizationType('line')" />
+  <p-button label="Área" [outlined]="visualizationType() !== 'area'" severity="secondary" (onClick)="updateVisualizationType('area')" />
+  <p-button label="KPI" [outlined]="visualizationType() !== 'kpi'" severity="secondary" (onClick)="updateVisualizationType('kpi')" />
+  <p-button label="Tabela" [outlined]="visualizationType() !== 'table'" severity="secondary" (onClick)="updateVisualizationType('table')" />
+</app-button-group-wrapper>
+
+<section>
+  @if (isLoading()) {
+    <p-progress-spinner class="flex justify-center" strokeWidth="8" fill="transparent" animationDuration=".5s" [style]="{ width: '50px', height: '50px' }" />
+  } @else {
+    @if (loadedData()) {
+      <div class="w-full rounded-lg shadow-sm mb-8 p-5 text-center">
+        <app-preview-data [data]="loadedData()!" [visualizationType]="visualizationType()" />
+      </div>
+    } @else if (hasError()) {
+      <p-message severity="error" icon="pi pi-info-circle" class="flex justify-center mt-4 mb-7">Dados inválidos para esse tipo de métrica!</p-message>
+    }
+  }
+</section>
+
+<div class="flex justify-between mt-20">
+  <app-button-wrapper label="Carregar prévia" [rounded]="true" [outlined]="true" severity="secondary" (onClick)="loadPreview()" />
+
+  <app-button-wrapper label="Adicionar métrica" [rounded]="true" [raised]="true" (onClick)="addMetric()" [disabled]="loadedData() === null" />
+</div>

@@ -3,6 +3,7 @@ import {
   Component,
   forwardRef,
   input,
+  output,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -34,4 +35,6 @@ export class SelectWrapper extends BaseInput<unknown> {
   readonly editable = input(false);
   readonly showClear = input(false);
   readonly loading = input(false);
+
+  readonly onSelectChange = output<unknown>();
 }

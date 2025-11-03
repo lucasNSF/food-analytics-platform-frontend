@@ -1,0 +1,34 @@
+<form class="flex flex-col gap-5">
+  @for (formControl of form.controls; track $index) {
+    <div class="flex gap-5">
+      <app-float-label-wrapper>
+        <app-select-wrapper
+          [options]="availableMeasures()"
+          inputId="dimension-{{ $index }}"
+          [formControl]="formControl"
+          [showClear]="true"
+          (onSelectChange)="onSelectChange()"
+          class="w-xs"
+        />
+
+        <label for="dimension-{{ $index }}">Selecione a medida</label>
+      </app-float-label-wrapper>
+
+      @if ($index > 0) {
+        <app-button-wrapper
+          icon="pi pi-trash"
+          [rounded]="true"
+          severity="secondary"
+          (onClick)="removeFormControl($index)"
+        />
+      }
+    </div>
+  }
+
+  <app-button-wrapper
+    label="Adicionar medida"
+    icon="pi pi-plus"
+    [rounded]="true"
+    (onClick)="addFormControl()"
+  />
+</form>

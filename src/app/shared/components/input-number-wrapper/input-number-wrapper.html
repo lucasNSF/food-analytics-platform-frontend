@@ -1,0 +1,18 @@
+<p-inputnumber
+  [ngModel]="value()"
+  (ngModelChange)="setValue($event)"
+  [disabled]="disabled()"
+  [variant]="variant()"
+  [invalid]="invalid()"
+  [placeholder]="placeholder()"
+  [class]="class()"
+  [id]="inputId()"
+  [mode]="mode()"
+  [currency]="currency()"
+  [useGrouping]="useGrouping()"
+  [min]="min()"
+  [max]="max()"
+  [minFractionDigits]="minFractionDigits()"
+  [maxFractionDigits]="maxFractionDigits()"
+  (onInput)="onInput.emit($event.value)"
+/>

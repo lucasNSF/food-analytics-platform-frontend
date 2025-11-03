@@ -23,6 +23,7 @@ export class DrawerWrapper {
   readonly visible = model.required<boolean>();
   readonly position = input<DrawerPosition>('right');
   readonly modal = input(false);
+  readonly class = input('');
 
   readonly headlessTemplate = contentChild('headless', { read: TemplateRef });
   readonly headerTemplate = contentChild('header', { read: TemplateRef });

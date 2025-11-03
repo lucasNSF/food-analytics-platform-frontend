@@ -4,20 +4,23 @@
   [modal]="modal()"
   (onShow)="show.emit()"
   (onHide)="hide.emit()"
+  [styleClass]="class()"
 >
   @if (headlessTemplate()) {
-    <ng-template pTemplate="headless">
-      <ng-container *ngTemplateOutlet="headlessTemplate()"></ng-container>
-    </ng-template>
-  } @else {
-    @if (headerTemplate()) {
-      <ng-container *ngTemplateOutlet="headerTemplate()"></ng-container>
-    }
-
-    <ng-content />
-
-    @if (footerTemplate()) {
-      <ng-container *ngTemplateOutlet="footerTemplate()"></ng-container>
-    }
+  <ng-template pTemplate="headless">
+    <ng-container *ngTemplateOutlet="headlessTemplate()"></ng-container>
+  </ng-template>
+  } @else { @if (headerTemplate()) {
+  <ng-template pTemplate="header">
+    <ng-container *ngTemplateOutlet="headerTemplate()"></ng-container>
+  </ng-template>
   }
+
+  <ng-content />
+
+  @if (footerTemplate()) {
+  <ng-template pTemplate="footer">
+    <ng-container *ngTemplateOutlet="footerTemplate()"></ng-container>
+  </ng-template>
+  } }
 </p-drawer>

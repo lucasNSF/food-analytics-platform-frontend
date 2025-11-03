@@ -1,0 +1,90 @@
+<form class="flex flex-col gap-8">
+  @for (formGroup of form.controls; track $index) {
+    <div class="flex flex-col gap-5">
+      <p>Filtro {{ $index + 1 }}</p>
+
+      <div class="flex gap-5">
+        <app-float-label-wrapper>
+          <app-select-wrapper
+            [options]="availableMembers()"
+            [formControl]="formGroup.controls.member"
+            inputId="member-{{ $index }}"
+            (onSelectChange)="onMemberChange(formGroup.controls.member)"
+            [showClear]="true"
+            class="w-xs"
+          />
+          <label for="member-{{ $index }}">Selecione o campo</label>
+        </app-float-label-wrapper>
+
+        @if ($index > 0) {
+          <app-button-wrapper
+            severity="secondary"
+            icon="pi pi-trash"
+            [rounded]="true"
+            (onClick)="removeFormGroup($index)"
+          />
+        }
+      </div>
+
+      @if (availableOperators() && availableOperators().length > 0) {
+        <app-float-label-wrapper>
+          <app-select-wrapper
+            [options]="availableOperators()"
+            (onSelectChange)="onOperatorChange(formGroup, $event)"
+            inputId="operator-{{ $index }}"
+            [showClear]="true"
+            class="w-xs"
+          />
+          <label for="operator-{{ $index }}">Selecione o operador lógico</label>
+        </app-float-label-wrapper>
+      }
+
+      @switch (formGroup.value.member?.type) {
+          @case ('string') {
+            <app-float-label-wrapper>
+              <app-select-wrapper
+                [options]="availableValues()"
+                inputId="value-{{ $index }}"
+                [showClear]="true"
+                class="w-xs"
+                (onSelectChange)="onFilterValueChange(formGroup, $event)"
+                [loading]="isLoadingValues()"
+              />
+              <label for="value-{{ $index }}">Selecione o valor</label>
+            </app-float-label-wrapper>
+          }
+          @case ('number') {
+            <app-float-label-wrapper>
+              <app-input-number-wrapper
+                mode="decimal"
+                inputId="value-{{ $index }}"
+                (onInput)="onFilterValueChange(formGroup, $event)"
+                [minFractionDigits]="2"
+                class="w-xs"
+              />
+              <label for="value-{{ $index }}">Selecione o valor</label>
+            </app-float-label-wrapper>
+          }
+          @case ('date') {
+            <app-float-label-wrapper>
+              <app-date-picker-wrapper
+                selectionMode="range"
+                [ngModel]="dateFilter()"
+                name="date"
+                (ngModelChange)="onFilterValueChange(formGroup, $event)"
+                inputId="value-{{ $index }}"
+              />
+              <label for="value-{{ $index }}">Selecione o valor</label>
+            </app-float-label-wrapper>
+          }
+        }
+    </div>
+  }
+
+  <app-button-wrapper
+    label="Adicionar filtro"
+    icon="pi pi-plus"
+    [rounded]="true"
+    (onClick)="addFormGroup()"
+  />
+</form>
