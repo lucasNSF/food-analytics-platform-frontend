@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../../../environments/environment.development';
 import { AnalyticsMetadata } from '../../../../shared/types/analytics-metadata';
 import { of, switchMap } from 'rxjs';
 import { AnalyticsPayload, AnalyticsVisualizationType } from '@/shared/types/analytics-payload';
 import { AnalyticsMetric } from '@/shared/types/analytics-metric';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
