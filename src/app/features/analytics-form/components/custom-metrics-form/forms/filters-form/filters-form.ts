@@ -13,6 +13,7 @@ import {
   OnChanges,
   output,
   signal,
+  WritableSignal,
 } from '@angular/core';
 import {
   FormArray,
@@ -49,10 +50,11 @@ export class FiltersForm implements OnChanges {
   private readonly analyticsMetadataService = inject(AnalyticsMetadataService);
   private readonly formBuilder = inject(FormBuilder);
 
+  private mapAvailableValues = new Map<number, WritableSignal<unknown[]>>();
+
   readonly selectedContext = input.required<string>();
   readonly availableMembers = signal<ReportMemberMetadata[]>([]);
   readonly availableOperators = signal<{ label: string; value: string }[]>([]);
-  readonly availableValues = signal<string[]>([]);
   readonly isLoadingValues = signal(false);
   readonly formValue =
     output<
@@ -74,20 +76,29 @@ export class FiltersForm implements OnChanges {
 
     this.form.push(fg);
 
+    const index = this.form.length - 1;
+
+    this.mapAvailableValues.set(index, signal([]));
+
     this.emitFormValue();
   }
 
   removeFormGroup(index: number) {
     this.form.removeAt(index);
     this.emitFormValue();
+    this.mapAvailableValues.delete(index);
   }
 
-  onMemberChange(memberControl: FormControl<ReportMemberMetadata | null>) {
+  getAvailableValues(index: number) {
+    return this.mapAvailableValues.get(index)!.asReadonly();
+  }
+
+  onMemberChange(memberControl: FormControl<ReportMemberMetadata | null>, index: number) {
     this.setAvailableOperators(memberControl);
 
     switch (memberControl.value?.type) {
       case 'string':
-        this.setAvailableFilterValues(memberControl);
+        this.setAvailableFilterValues(memberControl, index);
         break;
       case 'date':
         this.availableOperators.set([]);
@@ -147,12 +158,15 @@ export class FiltersForm implements OnChanges {
   private resetFormToInitialState() {
     this.form = this.formBuilder.array<FilterForm>([this.createFormGroup()]);
     this.availableOperators.set([]);
-    this.availableValues.set([]);
+    this.mapAvailableValues = new Map();
     this.emitFormValue();
   }
 
-  private setAvailableFilterValues({ value }: FormControl<ReportMemberMetadata | null>) {
-    this.availableValues.set([]);
+  private setAvailableFilterValues(
+    { value }: FormControl<ReportMemberMetadata | null>,
+    index: number
+  ) {
+    this.mapAvailableValues.get(index)?.set([]);
 
     if (!value) return;
 
@@ -162,7 +176,7 @@ export class FiltersForm implements OnChanges {
       next: ({ metadata }) => {
         const availableValues = metadata.map((data) => data[value.attribute]);
 
-        this.availableValues.set(availableValues);
+        this.mapAvailableValues.get(index)?.set(availableValues);
 
         this.isLoadingValues.set(false);
       },
@@ -210,6 +224,7 @@ export class FiltersForm implements OnChanges {
     const { dimensions, metrics } = metadata;
 
     this.availableMembers.set(dimensions.concat(metrics));
+    this.mapAvailableValues.set(0, signal([]));
   }
 
   private createFormGroup() {
